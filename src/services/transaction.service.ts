@@ -3,6 +3,7 @@ import { coreApi } from "../config/midtrans";
 import Transaction from "../models/Transaction";
 import { CreateTransactionInput } from "../schemas/transaction.schema";
 import { logger } from "../config/logger";
+import { AppError } from "../utils/AppError";
 
 export const createTransaction = async (userId: string, input: CreateTransactionInput) => {
     const orderId = `PAYFLOW-${randomUUID()}`;
@@ -16,9 +17,6 @@ export const createTransaction = async (userId: string, input: CreateTransaction
     };
 
     if (input.paymentMethod === "bank_transfer") {
-        if (!input.bank) {
-            throw new Error("Bank is required for bank_transfer payment method");
-        }
         chargeParameter.bank_transfer = { bank: input.bank };
     }
 
@@ -45,7 +43,7 @@ export const createTransaction = async (userId: string, input: CreateTransaction
 export const getTransactionStatus = async (orderId: string) => {
     const transaction = await Transaction.findOne({ orderId });
     if (!transaction) {
-        throw new Error("Transaction not found");
+        throw new AppError("Transaction not found", 404);
     }
 
     const midtransStatus = await coreApi.transaction.status(orderId);

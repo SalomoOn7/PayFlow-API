@@ -3,6 +3,7 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { routes } from "./routes/index";
+import { errorHandler } from "./middlewares/errorHandler";
 
 const app: Application = express();
 
@@ -34,5 +35,7 @@ const globalLimiter = rateLimit({
 app.use(globalLimiter);
 
 routes(app);
+
+app.use(errorHandler);
 
 export default app;
