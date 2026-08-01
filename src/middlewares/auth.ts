@@ -5,6 +5,7 @@ import { logger } from "../config/logger";
 
 export interface AuthRequest extends Request {
     userId?: string;
+    idempotencyKey?: string;
 }
 
 export const authenticate = (

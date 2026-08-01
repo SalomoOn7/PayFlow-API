@@ -50,6 +50,14 @@ export const handleMidtransNotification = async (
         payload.fraud_status
     );
 
+    if (transaction.status === newStatus) {
+        logger.info(
+            { orderId: payload.order_id, status: newStatus },
+            "Duplicate webhook notification, status unchanged, skipping"
+        );
+        return transaction;
+    }
+
     transaction.status = newStatus;
     await transaction.save();
 
