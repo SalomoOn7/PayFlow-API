@@ -180,7 +180,11 @@ ngrok http 5000
 
 ## Live Demo
 
-API sudah di-deploy di Railway: `https://payflow-api-production-dc77.up.railway.app`
+API pernah di-deploy di Railway (trial sudah berakhir).
+
+Untuk menjalankan sendiri, lihat bagian "Menjalankan Secara Lokal" di atas.
+
+API sebelumnya sudah di-deploy di Railway: `https://payflow-api-production-dc77.up.railway.app`
 
 Contoh test health check:
 ```bash
